@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1601892018112.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "A918AB2E",
+    "lastKnownWriteTime" : 1601892087,
+    "last_content_update" : 1601892087075,
+    "path" : "C:/Users/sikyu/Desktop/UCLA/Data Science Project/HRAnalytics/HRAnalytics/HRAnalytics_Data_Analysis_PDF.Rmd",
+    "project_path" : "HRAnalytics_Data_Analysis_PDF.Rmd",
+    "properties" : {
+        "cursorPosition" : "4,7",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

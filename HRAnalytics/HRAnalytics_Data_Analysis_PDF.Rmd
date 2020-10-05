@@ -1,0 +1,410 @@
+---
+title: "HRAnalytics_Data_Analysis_PDF"
+author: "Sikyun Lee"
+date: '2020 10 5 '
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+This notebook is an analytics project to analyze the dataset provdied in the (IBM HR Analytics Employee Attrition & Performance)[https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset]
+
+The notebook will consist of Exploratory Data Analysis, Cohort Analysis by Attrition and Join Dates, and Prediction of Attrition.
+
+# Library Load
+
+```{r}
+library(dplyr)
+library(tidyverse)
+library(highcharter)
+library(randomForest)
+library(caret)
+library(pROC)
+library(magrittr)
+library(ggplot2)
+library(highcharter)
+library(lubridate)
+library(prophet)
+library(ModelMetrics)
+library(caTools)
+library(rpart)
+library(rpart.plot)
+library(ROCR)
+```
+
+# Data Import
+
+```{r}
+data <- read.csv('WA_Fn-UseC_-HR-Employee-Attrition.csv')
+head(data)
+length(colnames(data)) #35 columns
+
+```
+
+# Data Fix
+There is an error reading in the Age column and this was fixed as below.
+
+```{r}
+data_tbl <- as.tibble(data)
+head(data_tbl)
+
+`%>%` <- magrittr:: `%>%` #setting piping 
+
+#change a glitch in the Age column name
+hr_data <- data_tbl %>%
+  rename(Age = 癤풞ge) %>%
+  glimpse
+```
+
+# Basic Data Check:
+The following basic checks and others have been done including:
+ - Number of Rows
+ - Number of Distinct Employee information
+ - Computations using dplyr functions
+ - Cohort Analysis of Employment by the Years
+ - Attrition by the Years in respect to Yearly Employment
+```{r}
+hr_data %>%
+  summarise(n()) %>%
+  glimpse #1470 Rows in data
+
+hr_data %>%
+  summarise(n_distinct(EmployeeNumber)) %>%
+  glimpse #1470, so EmployeeNumber can be used a Primary Key
+
+hr_data %>%
+  group_by(Attrition) %>%
+  summarise(n()) %>%
+  glimpse #so 237 Yes and 1233 No, totals to 1470 rows
+
+hr_data %>% 
+  group_by(Attrition) %>%
+  summarise(avg_age = mean(Age, na.rm = TRUE)) %>%
+  glimpse #Avg Age of No: 37.56, Yes: 33.61 --> Not much Diff
+
+hr_data %>%
+  group_by(Attrition) %>%
+  summarise(job_satisfaction = mean(EnvironmentSatisfaction, na.rm = TRUE)) %>%
+  glimpse #No: 2.77, Yes: 2.46
+
+hr_data %>%
+  group_by(Attrition) %>%
+  summarise(avg_income = mean(MonthlyIncome, na.rm = TRUE)) %>%
+  glimpse #No: $6833, Yes: $4787
+
+hr_data %>%
+  group_by(Attrition) %>%
+  summarise(avg_job = mean(NumCompaniesWorked, na.rm = TRUE)) %>%
+  glimpse #No: 2.65, Yes: 2.94
+
+hr_data %>%
+  group_by(Attrition) %>%
+  summarise(job_satisfaction = mean(JobSatisfaction, na.rm = TRUE)) %>%
+  glimpse #No: 2.78, Yes: 2.47
+
+#Percentage of Attrition per JobRole
+hr_data %>% 
+  group_by(Attrition, JobRole) %>%
+  summarise(churn_employee_num = n()) %>%
+  #filter(Attrition == "Yes") %>%
+  arrange(desc(churn_employee_num)) %>%
+  #filter(JobRole == "Sales Executive") %>%
+  ungroup() %>%
+  group_by(JobRole) %>%
+  filter(Attrition == "Yes") %>%
+  summarise(pct_attr = n()/churn_employee_num) %>%
+  arrange(desc(pct_attr)) %>%
+  glimpse #Yes: Top Laboratory Technician, Sales Executive, Research Scientist, Sales Representative, Human Resources
+#No: Sales Executive, Research Scientist, Laboratory Technician, Manufacturing Director
+
+#In terms of percentage per JobRole, Research Director 0.5, Manager 0.20000000, Healthcare Representative 0.11111111, Manufacturing Director 0.10000000, Human Resources 0.08333333 are top roles and percentage that they leave compared to the total number of people
+
+#Create cohort using YearsAtCompany, YearsInCurrentRole,YearsSinceLastPromotion, YearsWithCurrManager column
+hr_data1 <- hr_data %>%
+  mutate(date = as.Date(paste0(year(Sys.Date()), "-", month(Sys.Date()), "-01"))) %>%
+  mutate(join_date = year(date) - YearsAtCompany) %>%
+  mutate(curr_role_date = year(date) - YearsInCurrentRole) %>%
+  mutate(last_promo = year(date) - YearsSinceLastPromotion) %>%
+  mutate(curr_boss_date = year(date) - YearsWithCurrManager) %>%
+  glimpse
+
+#Create a Attrition by Employees' joining Date
+cohort_join_date <- hr_data1 %>%
+  group_by(join_date) %>%
+  summarise(join_year = n()) %>%
+  filter(join_date >= 2014) %>%
+  arrange(desc(join_date)) %>%
+  glimpse
+
+cohort_churn_join_date <- hr_data1 %>%
+  filter(Attrition == "Yes") %>%
+  group_by(join_date) %>%
+  summarise(join_year = n()) %>%
+  filter(join_date >= 2014) %>%
+  arrange(desc(join_date)) %>%
+  glimpse
+
+hc <- highchart() %>%
+  hc_chart(type = "column") %>%
+  hc_title(text = "Annual New Employees") %>%
+  #hc_add_series_list(ds) %>%
+  hc_add_series(name = "Total Employees",
+                type = 'column',
+                showInLegend = FALSE,
+                data = cohort_join_date,
+                hcaes(name = join_date, y = join_year),
+                lineWidth = 0,
+                dataLabels = list(
+                  enabled = TRUE,
+                  formatter = highcharter::JS(
+                        'function() {
+                        if (this.y > 1000) {
+                        return Highcharts.numberFormat((this.y/1000), 1) + "K"
+                        } else {
+                        return this.y
+                        }
+                        }'
+                      )),
+    #stacking = "no",
+    enableMouseTracking = TRUE) %>%
+  hc_add_series(name = "Total Attrition",
+                type = 'column',
+                showInLegend = FALSE,
+                data = cohort_churn_join_date,
+                hcaes(name = join_date, y = join_year),
+                lineWidth = 0,
+                dataLabels = list(
+                  enabled = TRUE),
+                #stacking = "no",
+                enableMouseTracking = TRUE) %>%
+  hc_xAxis(categories = unique(cohort_join_date$join_date)) %>%
+  hc_yAxis(title = list(text = " " )) %>%
+   hc_exporting(enables = TRUE,
+               buttons = list(contextButton = 
+                                list(menuItems = c('viewFullscreen',
+                                                   'downloadPNG',
+                                                   'separator',
+                                                   'downloadCSV')))) %>%
+  hc_add_theme(hc_theme_economist())
+hc
+
+
+```
+
+# First Exploratory Analysis Question: What is the yearly employment total and total churned (attrition)?
+
+Based on years, 2019 seens the most attrition with the most employment while in terms of ratio, 2015 had the smallest attrition ratio in respect to employment. 
+
+```{r}
+hr_data2 <- hr_data1 %>%
+  group_by(JobRole, Attrition) %>%
+  summarise(count = n()) %>%
+  filter(Attrition == "Yes") %>%
+#  top_n(5, count) %>%
+  arrange(desc(count)) %>%
+  glimpse
+
+hr_data3 <- hr_data1 %>%
+  group_by(JobRole) %>%
+  summarise(total = n()) %>%
+#  top_n(5, total) %>%
+  arrange(desc(total)) %>%
+  glimpse
+
+hc2 <- highchart() %>%
+  hc_chart(type = "column") %>%
+  hc_title(text = "Attrition by Job Roles") %>%
+  #hc_add_series_list(ds) %>%
+  hc_add_series(name = "Churns by Job Roles",
+                type = 'column',
+                showInLegend = FALSE,
+                data = hr_data2,
+                hcaes(name = JobRole, y = count),
+                lineWidth = 0,
+                dataLabels = list(
+                  enabled = TRUE,
+                  formatter = highcharter::JS(
+                        'function() {
+                        if (this.y > 1000) {
+                        return Highcharts.numberFormat((this.y/1000), 1) + "K"
+                        } else {
+                        return this.y
+                        }
+                        }'
+                      )),
+    stacking = "normal",
+    enableMouseTracking = TRUE) %>%
+  hc_add_series(name = "Employees by Job Roles",
+                type = 'column',
+                showInLegend = FALSE,
+                data = hr_data3,
+                hcaes(name = JobRole, y = total),
+                lineWidth = 0,
+                dataLabels = list(
+                  enabled = TRUE
+                ),
+                stacking = "normal",
+                enableMouseTracking = TRUE) %>%
+  hc_xAxis(categories = unique(hr_data2$JobRole)) %>%
+  hc_yAxis(title = list(text = " " )) %>%
+   hc_exporting(enables = TRUE,
+               buttons = list(contextButton = 
+                                list(menuItems = c('viewFullscreen',
+                                                   'downloadPNG',
+                                                   'separator',
+                                                   'downloadCSV')))) %>%
+  hc_add_theme(hc_theme_economist())
+hc2
+```
+
+# Second Exploratory Analysis Question: Which Job Roles have seen the highest number of churns (attritions)?
+Based on this, Laboratory Technicians have the highest attrition followed by Sales Executive and Research Scientist. 
+
+```{r}
+hr_data4 <- hr_data1 %>%
+  mutate(IncomeRange = case_when(
+  MonthlyIncome >= 0 & MonthlyIncome < 2000 ~ "Very Low",
+  MonthlyIncome >= 2000 & MonthlyIncome < 4000 ~ "Low",
+  MonthlyIncome >= 4000 & MonthlyIncome < 6000 ~ "Mid",
+  MonthlyIncome >= 6000 & MonthlyIncome < 8000 ~ "High",
+  MonthlyIncome >= 8000 ~ "Very High"
+)) %>%
+  group_by(Education) %>%
+  select(Education, Attrition, MonthlyIncome, IncomeRange) %>%
+  summarise(count = n(), avg_incomerange = mean(MonthlyIncome)) %>%
+  glimpse
+
+hr_data5 <- hr_data1 %>%
+  filter(Attrition == "Yes") %>%
+  mutate(IncomeRange = case_when(
+  MonthlyIncome >= 0 & MonthlyIncome < 2000 ~ "Very Low",
+  MonthlyIncome >= 2000 & MonthlyIncome < 4000 ~ "Low",
+  MonthlyIncome >= 4000 & MonthlyIncome < 6000 ~ "Mid",
+  MonthlyIncome >= 6000 & MonthlyIncome < 8000 ~ "High",
+  MonthlyIncome >= 8000 ~ "Very High"
+)) %>%
+  group_by(Education) %>%
+  select(Education, Attrition, MonthlyIncome, IncomeRange) %>%
+  summarise(count = n(), avg_incomerange = mean(MonthlyIncome)) %>%
+  glimpse
+  
+
+hc3 <- highchart() %>%
+  hc_chart(type = "column") %>%
+  hc_title(text = "Attrition by Education Level") %>%
+  #hc_add_series_list(ds) %>%
+  hc_add_series(name = "Churns by Education Level",
+                type = 'column',
+                showInLegend = FALSE,
+                data = hr_data5,
+                hcaes(name = Education, y = count),
+                lineWidth = 0,
+                dataLabels = list(
+                  enabled = TRUE,
+                  formatter = highcharter::JS(
+                        'function() {
+                        if (this.y > 1000) {
+                        return Highcharts.numberFormat((this.y/1000), 1) + "K"
+                        } else {
+                        return this.y
+                        }
+                        }'
+                      )),
+    stacking = "normal",
+    enableMouseTracking = TRUE) %>%
+  hc_add_series(name = "Employees by Education",
+                type = 'column',
+                showInLegend = FALSE,
+                data = hr_data4,
+                hcaes(name = Education, y = count),
+                lineWidth = 0,
+                dataLabels = list(
+                  enabled = TRUE
+                ),
+                stacking = "normal",
+                enableMouseTracking = TRUE) %>%
+  hc_add_series(name = "Average Monthly Income by Education - Overall",
+                type = 'line',
+                showInLegend = TRUE,
+                data = hr_data4,
+                hcaes(name = Education, y = avg_incomerange),
+                lineWidth = 0,
+                dataLabels = list(
+                  enabled = TRUE,
+                  formatter = highcharter::JS(
+                        'function() {
+                        if (this.y > 1000) {
+                        return "$" + Highcharts.numberFormat((this.y/1000), 1) + "K"
+                        } else {
+                        return this.y
+                        }
+                        }'
+                      )),
+                enableMouseTracking = TRUE) %>%
+  hc_xAxis(categories = unique(hr_data5$Education)) %>%
+  hc_yAxis(title = list(text = " " )) %>%
+   hc_exporting(enables = TRUE,
+               buttons = list(contextButton = 
+                                list(menuItems = c('viewFullscreen',
+                                                   'downloadPNG',
+                                                   'separator',
+                                                   'downloadCSV')))) %>%
+  hc_add_theme(hc_theme_economist())
+hc3
+
+```
+
+#Third Exploratory Analysis: What relationship does monthly income have with attrition and education?
+Based on the results, the most attrition is at level 3 eduation - where there are the most employees - and they have a "mid" level income. This is probably because these people have an opportunity to build a better career for themselves and pursue these better opportunities. This is evident based on the slight differences between the working environment satisfaction where the average Job Satisfaction - No is 2.78 while average Job Satisfaction - Yes is slightly lower at 2.47. 
+
+```{r}
+rf_data <- hr_data1
+rf_data <- rf_data %>%
+  mutate(Attrition = as.factor(Attrition)) %>%
+  mutate(BusinessTravel = if_else(BusinessTravel == "Travel_Rarely", 1, if_else(BusinessTravel == "Travel_Frequently", 2, 0))) %>%
+  mutate(EducationField = if_else(EducationField == "Life Sciences", 1, if_else(EducationField == "Marketing", 2, if_else(EducationField == "Technical Degree", 3, if_else(EducationField == "Medical", 4, if_else(EducationField == "Human Resources", 5, if_else(EducationField == "Other", 6, 0))))))) %>%
+  mutate(IncomeRange = case_when(
+  MonthlyIncome >= 0 & MonthlyIncome < 2000 ~ 1,
+  MonthlyIncome >= 2000 & MonthlyIncome < 4000 ~ 2,
+  MonthlyIncome >= 4000 & MonthlyIncome < 6000 ~ 3,
+  MonthlyIncome >= 6000 & MonthlyIncome < 8000 ~ 4,
+  MonthlyIncome >= 8000 ~ 5
+)) %>%
+  mutate(Gender = if_else(Gender == "Female", 2, 1)) %>%
+  select(Attrition, BusinessTravel, Education, EducationField, IncomeRange, TotalWorkingYears, TrainingTimesLastYear, YearsInCurrentRole, YearsSinceLastPromotion, YearsWithCurrManager, MonthlyIncome, MonthlyRate, Gender, DistanceFromHome, JobSatisfaction, EnvironmentSatisfaction, PerformanceRating)
+
+set.seed(110)
+indexes <- sample(1:nrow(rf_data), size = 0.7*nrow(rf_data))
+train_data <- rf_data[indexes,]
+test_data <- rf_data[-indexes,]
+
+rf_model <- randomForest(Attrition ~ ., train_data, importance = TRUE, ntree = 300)
+result <- varImpPlot(rf_model)
+rf_model
+result
+```
+
+# Results from the Random Forest Model
+Based on Random Forest model, Total Working Years, Monthly Income, MOntly Rate, Distance From Home, Years since Last Promotion are most related with Node Impurity, meaning they have the highest relation to the Attrition.
+
+```{r}
+rf_pred <- predict(rf_model, newdata = test_data)
+confusionMatrix(test_data$Attrition, rf_pred)
+```
+# Evaluation on Random Forest Model
+Based on the model, the accuracy of the model is approx. 83%. 
+
+```{r}
+rf_plot <- plot.roc(as.numeric(test_data$Attrition), as.numeric(rf_pred), lwd = 2, type ="b", print.auc = TRUE, col = "red")
+
+```
+
+# AUC on ROC
+Although this is not a good fit or a model that explains the data well, this is a starting point in tuning the model by adding additional features and also better factoring the character data types. (this was a quick run so it didn't include all features)
+
+# Conclusion
+A quick data exploration including simple aggregations and cohort analysis shows that employees in certain job roles, education level, and income level are employed more but are proned to churn. 
+Though job satisfaction between those and those who did not churn are not large, this on the flip side shows that any employee can churn away depending on important factors such as Total Working Years, Monthly Income, MOntly Rate, Distance From Home, Years since Last Promotion.
+As a recommendation, although companies cannot realistically workout compensations to the level of every employee's satisfaction, they could work on distance from work - especially with work from home with COVID19 - and improve working conditions such as periodic trainings and opportunities to move up to a higher position in order to make employees feel that they are valued within the organization. 
