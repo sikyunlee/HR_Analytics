@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1601881319400.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "69E39047",
+    "lastKnownWriteTime" : 1598225278,
+    "last_content_update" : 1598225278,
+    "path" : "C:/Users/sikyu/Desktop/UCLA/Data Science Project/UCLA Datathon/COVID-19/COVID-19/R/analytics_functions.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "38,27",
+        "scrollLine" : "24"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

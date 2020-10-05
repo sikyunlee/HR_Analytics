@@ -1,0 +1,4 @@
+"0","library(RCurl)
+"
+"2","Error in library(RCurl) : ‘RCurl’이라고 불리는 패키지가 없습니다
+"

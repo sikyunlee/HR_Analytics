@@ -1,0 +1,65 @@
+"0","hc3 <- highchart() %>%
+  hc_chart(type = ""column"") %>%
+  hc_title(text = ""Attrition by Education Level"") %>%
+  #hc_add_series_list(ds) %>%
+  hc_add_series(name = ""Churns by Education Level"",
+                type = 'column',
+                showInLegend = FALSE,
+                data = hr_data5,
+                hcaes(name = Education, y = count),
+                lineWidth = 0,
+                dataLabels = list(
+                  enabled = TRUE,
+                  formatter = highcharter::JS(
+                        'function() {
+                        if (this.y > 1000) {
+                        return Highcharts.numberFormat((this.y/1000), 1) + ""K""
+                        } else {
+                        return this.y
+                        }
+                        }'
+                      )),
+    stacking = ""normal"",
+    enableMouseTracking = TRUE) %>%
+  hc_add_series(name = ""Employees by Education"",
+                type = 'column',
+                showInLegend = FALSE,
+                data = hr_data4,
+                hcaes(name = Education, y = count),
+                lineWidth = 0,
+                dataLabels = list(
+                  enabled = TRUE
+                ),
+                stacking = ""normal"",
+                enableMouseTracking = TRUE) %>%
+  hc_add_series(name = ""Average Monthly Income by Education"",
+                type = 'line',
+                showInLegend = FALSE,
+                data - hr_data4,
+                hcaes(name = Education, y = avg_incomerange),
+                lineWidth = 0,
+                dataLabels = list(
+                  enabled = TRUE,
+                  formatter = highcharter::JS(
+                        'function() {
+                        if (this.y > 1000) {
+                        return ""$"" + Highcharts.numberFormat((this.y/1000), 1) + ""K""
+                        } else {
+                        return this.y
+                        }
+                        }'
+                      )),
+                enableMouseTracking = TRUE) %>%
+  hc_xAxis(categories = unique(hr_data5$Education)) %>%
+  hc_yAxis(title = list(text = "" "" )) %>%
+   hc_exporting(enables = TRUE,
+               buttons = list(contextButton = 
+                                list(menuItems = c('viewFullscreen',
+                                                   'downloadPNG',
+                                                   'separator',
+                                                   'downloadCSV')))) %>%
+  hc_add_theme(hc_theme_economist())
+"
+"2","Error in Ops.data.frame(data, hr_data4) : 
+  ‘-’ only defined for equally-sized data frames
+"

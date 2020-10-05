@@ -1,0 +1,6 @@
+"0","rf_plot <- plot.roc(as.numeric(test_data$Attrition), as.numeric(rf_pred), lwd = 2, type =""b"", print.auc = TRUE, col = ""red"")
+"
+"2","Setting levels: control = 1, case = 2
+"
+"2","Setting direction: controls < cases
+"

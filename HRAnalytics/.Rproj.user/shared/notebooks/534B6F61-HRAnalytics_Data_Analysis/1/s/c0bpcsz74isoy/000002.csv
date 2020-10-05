@@ -1,0 +1,22 @@
+"0","hr_data3 <- hr_data1 %>%
+  group_by(JobRole) %>%
+  summarise(total = n()) %>%
+#  top_n(5, total) %>%
+  arrange(desc(total)) %>%
+  glimpse
+"
+"2","`summarise()` ungrouping output (override with `.groups` argument)
+"
+"1","Rows: 9"
+"1",""
+"1","
+"
+"1","Columns: 2"
+"1",""
+"1","
+"
+"1","$ JobRole [3m[38;5;246m<chr>[39m[23m ""Sales Executive"", ""Research Scientist"", ""Laboratory Technician"", ""Manufacturing Director"", ""Healthcare Representat...
+$ total   [3m[38;5;246m<int>[39m[23m 326, 292, 259, 145, 131, 102, 83, 80, 52"
+"1",""
+"1","
+"
