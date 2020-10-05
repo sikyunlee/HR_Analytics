@@ -5930,112 +5930,12 @@ summary {
 <p>The notebook will consist of Exploratory Data Analysis, Cohort Analysis by Attrition and Join Dates, and Prediction of Attrition.</p>
 <div id="library-load" class="section level1">
 <h1>Library Load</h1>
-<pre class="r"><code>library(dplyr)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## -- Attaching packages ---------------------------- tidyverse 1.3.0 --</code></pre>
-<pre><code>## √ ggplot2 3.3.2     √ purrr   0.3.4
-## √ tibble  3.0.1     √ stringr 1.4.0
-## √ tidyr   1.0.3     √ forcats 0.5.0
-## √ readr   1.3.1</code></pre>
-<pre><code>## -- Conflicts ------------------------------- tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>library(highcharter)</code></pre>
-<pre><code>## Registered S3 method overwritten by &#39;quantmod&#39;:
-##   method            from
-##   as.zoo.data.frame zoo</code></pre>
-<pre><code>## Highcharts (www.highcharts.com) is a Highsoft software product which is</code></pre>
-<pre><code>## not free for commercial and Governmental use</code></pre>
-<pre class="r"><code>library(randomForest)</code></pre>
-<pre><code>## randomForest 4.6-14</code></pre>
-<pre><code>## Type rfNews() to see new features/changes/bug fixes.</code></pre>
-<pre><code>## 
-## Attaching package: &#39;randomForest&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
-## 
-##     margin</code></pre>
-<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     combine</code></pre>
-<pre class="r"><code>library(caret)</code></pre>
-<pre><code>## Loading required package: lattice</code></pre>
-<pre><code>## 
-## Attaching package: &#39;caret&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:purrr&#39;:
-## 
-##     lift</code></pre>
-<pre class="r"><code>library(pROC)</code></pre>
-<pre><code>## Type &#39;citation(&quot;pROC&quot;)&#39; for a citation.</code></pre>
-<pre><code>## 
-## Attaching package: &#39;pROC&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     cov, smooth, var</code></pre>
-<pre class="r"><code>library(magrittr)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;magrittr&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:purrr&#39;:
-## 
-##     set_names</code></pre>
-<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
-## 
-##     extract</code></pre>
-<pre class="r"><code>library(ggplot2)
-library(highcharter)
-library(lubridate)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;lubridate&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     date, intersect, setdiff, union</code></pre>
-<pre class="r"><code>library(prophet)</code></pre>
-<pre><code>## Loading required package: Rcpp</code></pre>
-<pre><code>## Loading required package: rlang</code></pre>
-<pre><code>## 
-## Attaching package: &#39;rlang&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:magrittr&#39;:
-## 
-##     set_names</code></pre>
-<pre><code>## The following objects are masked from &#39;package:purrr&#39;:
-## 
-##     %@%, as_function, flatten, flatten_chr, flatten_dbl, flatten_int,
-##     flatten_lgl, flatten_raw, invoke, list_along, modify, prepend,
-##     splice</code></pre>
-<pre class="r"><code>library(ModelMetrics)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;ModelMetrics&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:pROC&#39;:
-## 
-##     auc</code></pre>
-<pre><code>## The following objects are masked from &#39;package:caret&#39;:
-## 
-##     confusionMatrix, precision, recall, sensitivity, specificity</code></pre>
-<pre><code>## The following object is masked from &#39;package:base&#39;:
-## 
-##     kappa</code></pre>
-<pre class="r"><code>library(caTools)
-library(rpart)
-library(rpart.plot)
-library(ROCR)</code></pre>
 </div>
 <div id="data-import" class="section level1">
 <h1>Data Import</h1>
 <pre class="r"><code>data &lt;- read.csv(&#39;WA_Fn-UseC_-HR-Employee-Attrition.csv&#39;)
-head(data)</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["癤풞ge"],"name":[1],"type":["int"],"align":["right"]},{"label":["Attrition"],"name":[2],"type":["chr"],"align":["left"]},{"label":["BusinessTravel"],"name":[3],"type":["chr"],"align":["left"]},{"label":["DailyRate"],"name":[4],"type":["int"],"align":["right"]},{"label":["Department"],"name":[5],"type":["chr"],"align":["left"]},{"label":["DistanceFromHome"],"name":[6],"type":["int"],"align":["right"]},{"label":["Education"],"name":[7],"type":["int"],"align":["right"]},{"label":["EducationField"],"name":[8],"type":["chr"],"align":["left"]},{"label":["EmployeeCount"],"name":[9],"type":["int"],"align":["right"]},{"label":["EmployeeNumber"],"name":[10],"type":["int"],"align":["right"]},{"label":["EnvironmentSatisfaction"],"name":[11],"type":["int"],"align":["right"]},{"label":["Gender"],"name":[12],"type":["chr"],"align":["left"]},{"label":["HourlyRate"],"name":[13],"type":["int"],"align":["right"]},{"label":["JobInvolvement"],"name":[14],"type":["int"],"align":["right"]},{"label":["JobLevel"],"name":[15],"type":["int"],"align":["right"]},{"label":["JobRole"],"name":[16],"type":["chr"],"align":["left"]},{"label":["JobSatisfaction"],"name":[17],"type":["int"],"align":["right"]},{"label":["MaritalStatus"],"name":[18],"type":["chr"],"align":["left"]},{"label":["MonthlyIncome"],"name":[19],"type":["int"],"align":["right"]},{"label":["MonthlyRate"],"name":[20],"type":["int"],"align":["right"]},{"label":["NumCompaniesWorked"],"name":[21],"type":["int"],"align":["right"]},{"label":["Over18"],"name":[22],"type":["chr"],"align":["left"]},{"label":["OverTime"],"name":[23],"type":["chr"],"align":["left"]},{"label":["PercentSalaryHike"],"name":[24],"type":["int"],"align":["right"]},{"label":["PerformanceRating"],"name":[25],"type":["int"],"align":["right"]},{"label":["RelationshipSatisfaction"],"name":[26],"type":["int"],"align":["right"]},{"label":["StandardHours"],"name":[27],"type":["int"],"align":["right"]},{"label":["StockOptionLevel"],"name":[28],"type":["int"],"align":["right"]},{"label":["TotalWorkingYears"],"name":[29],"type":["int"],"align":["right"]},{"label":["TrainingTimesLastYear"],"name":[30],"type":["int"],"align":["right"]},{"label":["WorkLifeBalance"],"name":[31],"type":["int"],"align":["right"]},{"label":["YearsAtCompany"],"name":[32],"type":["int"],"align":["right"]},{"label":["YearsInCurrentRole"],"name":[33],"type":["int"],"align":["right"]},{"label":["YearsSinceLastPromotion"],"name":[34],"type":["int"],"align":["right"]},{"label":["YearsWithCurrManager"],"name":[35],"type":["int"],"align":["right"]}],"data":[{"1":"41","2":"Yes","3":"Travel_Rarely","4":"1102","5":"Sales","6":"1","7":"2","8":"Life Sciences","9":"1","10":"1","11":"2","12":"Female","13":"94","14":"3","15":"2","16":"Sales Executive","17":"4","18":"Single","19":"5993","20":"19479","21":"8","22":"Y","23":"Yes","24":"11","25":"3","26":"1","27":"80","28":"0","29":"8","30":"0","31":"1","32":"6","33":"4","34":"0","35":"5","_rn_":"1"},{"1":"49","2":"No","3":"Travel_Frequently","4":"279","5":"Research & Development","6":"8","7":"1","8":"Life Sciences","9":"1","10":"2","11":"3","12":"Male","13":"61","14":"2","15":"2","16":"Research Scientist","17":"2","18":"Married","19":"5130","20":"24907","21":"1","22":"Y","23":"No","24":"23","25":"4","26":"4","27":"80","28":"1","29":"10","30":"3","31":"3","32":"10","33":"7","34":"1","35":"7","_rn_":"2"},{"1":"37","2":"Yes","3":"Travel_Rarely","4":"1373","5":"Research & Development","6":"2","7":"2","8":"Other","9":"1","10":"4","11":"4","12":"Male","13":"92","14":"2","15":"1","16":"Laboratory Technician","17":"3","18":"Single","19":"2090","20":"2396","21":"6","22":"Y","23":"Yes","24":"15","25":"3","26":"2","27":"80","28":"0","29":"7","30":"3","31":"3","32":"0","33":"0","34":"0","35":"0","_rn_":"3"},{"1":"33","2":"No","3":"Travel_Frequently","4":"1392","5":"Research & Development","6":"3","7":"4","8":"Life Sciences","9":"1","10":"5","11":"4","12":"Female","13":"56","14":"3","15":"1","16":"Research Scientist","17":"3","18":"Married","19":"2909","20":"23159","21":"1","22":"Y","23":"Yes","24":"11","25":"3","26":"3","27":"80","28":"0","29":"8","30":"3","31":"3","32":"8","33":"7","34":"3","35":"0","_rn_":"4"},{"1":"27","2":"No","3":"Travel_Rarely","4":"591","5":"Research & Development","6":"2","7":"1","8":"Medical","9":"1","10":"7","11":"1","12":"Male","13":"40","14":"3","15":"1","16":"Laboratory Technician","17":"2","18":"Married","19":"3468","20":"16632","21":"9","22":"Y","23":"No","24":"12","25":"3","26":"4","27":"80","28":"1","29":"6","30":"3","31":"3","32":"2","33":"2","34":"2","35":"2","_rn_":"5"},{"1":"32","2":"No","3":"Travel_Frequently","4":"1005","5":"Research & Development","6":"2","7":"2","8":"Life Sciences","9":"1","10":"8","11":"4","12":"Male","13":"79","14":"3","15":"1","16":"Laboratory Technician","17":"4","18":"Single","19":"3068","20":"11864","21":"0","22":"Y","23":"No","24":"13","25":"3","26":"3","27":"80","28":"0","29":"8","30":"2","31":"2","32":"7","33":"7","34":"3","35":"6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-<pre class="r"><code>length(colnames(data)) #35 columns</code></pre>
+#head(data)
+length(colnames(data)) #35 columns</code></pre>
 <pre><code>## [1] 35</code></pre>
 </div>
 <div id="data-fix" class="section level1">
@@ -6047,126 +5947,20 @@ head(data)</code></pre>
 ## The signature and semantics have changed, see `?as_tibble`.
 ## This warning is displayed once every 8 hours.
 ## Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
-<pre class="r"><code>head(data_tbl)</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["癤풞ge"],"name":[1],"type":["int"],"align":["right"]},{"label":["Attrition"],"name":[2],"type":["chr"],"align":["left"]},{"label":["BusinessTravel"],"name":[3],"type":["chr"],"align":["left"]},{"label":["DailyRate"],"name":[4],"type":["int"],"align":["right"]},{"label":["Department"],"name":[5],"type":["chr"],"align":["left"]},{"label":["DistanceFromHome"],"name":[6],"type":["int"],"align":["right"]},{"label":["Education"],"name":[7],"type":["int"],"align":["right"]},{"label":["EducationField"],"name":[8],"type":["chr"],"align":["left"]},{"label":["EmployeeCount"],"name":[9],"type":["int"],"align":["right"]},{"label":["EmployeeNumber"],"name":[10],"type":["int"],"align":["right"]},{"label":["EnvironmentSatisfaction"],"name":[11],"type":["int"],"align":["right"]},{"label":["Gender"],"name":[12],"type":["chr"],"align":["left"]},{"label":["HourlyRate"],"name":[13],"type":["int"],"align":["right"]},{"label":["JobInvolvement"],"name":[14],"type":["int"],"align":["right"]},{"label":["JobLevel"],"name":[15],"type":["int"],"align":["right"]},{"label":["JobRole"],"name":[16],"type":["chr"],"align":["left"]},{"label":["JobSatisfaction"],"name":[17],"type":["int"],"align":["right"]},{"label":["MaritalStatus"],"name":[18],"type":["chr"],"align":["left"]},{"label":["MonthlyIncome"],"name":[19],"type":["int"],"align":["right"]},{"label":["MonthlyRate"],"name":[20],"type":["int"],"align":["right"]},{"label":["NumCompaniesWorked"],"name":[21],"type":["int"],"align":["right"]},{"label":["Over18"],"name":[22],"type":["chr"],"align":["left"]},{"label":["OverTime"],"name":[23],"type":["chr"],"align":["left"]},{"label":["PercentSalaryHike"],"name":[24],"type":["int"],"align":["right"]},{"label":["PerformanceRating"],"name":[25],"type":["int"],"align":["right"]},{"label":["RelationshipSatisfaction"],"name":[26],"type":["int"],"align":["right"]},{"label":["StandardHours"],"name":[27],"type":["int"],"align":["right"]},{"label":["StockOptionLevel"],"name":[28],"type":["int"],"align":["right"]},{"label":["TotalWorkingYears"],"name":[29],"type":["int"],"align":["right"]},{"label":["TrainingTimesLastYear"],"name":[30],"type":["int"],"align":["right"]},{"label":["WorkLifeBalance"],"name":[31],"type":["int"],"align":["right"]},{"label":["YearsAtCompany"],"name":[32],"type":["int"],"align":["right"]},{"label":["YearsInCurrentRole"],"name":[33],"type":["int"],"align":["right"]},{"label":["YearsSinceLastPromotion"],"name":[34],"type":["int"],"align":["right"]},{"label":["YearsWithCurrManager"],"name":[35],"type":["int"],"align":["right"]}],"data":[{"1":"41","2":"Yes","3":"Travel_Rarely","4":"1102","5":"Sales","6":"1","7":"2","8":"Life Sciences","9":"1","10":"1","11":"2","12":"Female","13":"94","14":"3","15":"2","16":"Sales Executive","17":"4","18":"Single","19":"5993","20":"19479","21":"8","22":"Y","23":"Yes","24":"11","25":"3","26":"1","27":"80","28":"0","29":"8","30":"0","31":"1","32":"6","33":"4","34":"0","35":"5"},{"1":"49","2":"No","3":"Travel_Frequently","4":"279","5":"Research & Development","6":"8","7":"1","8":"Life Sciences","9":"1","10":"2","11":"3","12":"Male","13":"61","14":"2","15":"2","16":"Research Scientist","17":"2","18":"Married","19":"5130","20":"24907","21":"1","22":"Y","23":"No","24":"23","25":"4","26":"4","27":"80","28":"1","29":"10","30":"3","31":"3","32":"10","33":"7","34":"1","35":"7"},{"1":"37","2":"Yes","3":"Travel_Rarely","4":"1373","5":"Research & Development","6":"2","7":"2","8":"Other","9":"1","10":"4","11":"4","12":"Male","13":"92","14":"2","15":"1","16":"Laboratory Technician","17":"3","18":"Single","19":"2090","20":"2396","21":"6","22":"Y","23":"Yes","24":"15","25":"3","26":"2","27":"80","28":"0","29":"7","30":"3","31":"3","32":"0","33":"0","34":"0","35":"0"},{"1":"33","2":"No","3":"Travel_Frequently","4":"1392","5":"Research & Development","6":"3","7":"4","8":"Life Sciences","9":"1","10":"5","11":"4","12":"Female","13":"56","14":"3","15":"1","16":"Research Scientist","17":"3","18":"Married","19":"2909","20":"23159","21":"1","22":"Y","23":"Yes","24":"11","25":"3","26":"3","27":"80","28":"0","29":"8","30":"3","31":"3","32":"8","33":"7","34":"3","35":"0"},{"1":"27","2":"No","3":"Travel_Rarely","4":"591","5":"Research & Development","6":"2","7":"1","8":"Medical","9":"1","10":"7","11":"1","12":"Male","13":"40","14":"3","15":"1","16":"Laboratory Technician","17":"2","18":"Married","19":"3468","20":"16632","21":"9","22":"Y","23":"No","24":"12","25":"3","26":"4","27":"80","28":"1","29":"6","30":"3","31":"3","32":"2","33":"2","34":"2","35":"2"},{"1":"32","2":"No","3":"Travel_Frequently","4":"1005","5":"Research & Development","6":"2","7":"2","8":"Life Sciences","9":"1","10":"8","11":"4","12":"Male","13":"79","14":"3","15":"1","16":"Laboratory Technician","17":"4","18":"Single","19":"3068","20":"11864","21":"0","22":"Y","23":"No","24":"13","25":"3","26":"3","27":"80","28":"0","29":"8","30":"2","31":"2","32":"7","33":"7","34":"3","35":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-<pre class="r"><code>`%&gt;%` &lt;- magrittr:: `%&gt;%` #setting piping 
+<pre class="r"><code>#head(data_tbl)
+
+`%&gt;%` &lt;- magrittr:: `%&gt;%` #setting piping 
 
 #change a glitch in the Age column name
 hr_data &lt;- data_tbl %&gt;%
-  rename(Age = 癤풞ge) %&gt;%
-  glimpse</code></pre>
-<pre><code>## Rows: 1,470
-## Columns: 35
-## $ Age                      &lt;int&gt; 41, 49, 37, 33, 27, 32, 59, 30, 38, 36, 35...
-## $ Attrition                &lt;chr&gt; &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;...
-## $ BusinessTravel           &lt;chr&gt; &quot;Travel_Rarely&quot;, &quot;Travel_Frequently&quot;, &quot;Tra...
-## $ DailyRate                &lt;int&gt; 1102, 279, 1373, 1392, 591, 1005, 1324, 13...
-## $ Department               &lt;chr&gt; &quot;Sales&quot;, &quot;Research &amp; Development&quot;, &quot;Resear...
-## $ DistanceFromHome         &lt;int&gt; 1, 8, 2, 3, 2, 2, 3, 24, 23, 27, 16, 15, 2...
-## $ Education                &lt;int&gt; 2, 1, 2, 4, 1, 2, 3, 1, 3, 3, 3, 2, 1, 2, ...
-## $ EducationField           &lt;chr&gt; &quot;Life Sciences&quot;, &quot;Life Sciences&quot;, &quot;Other&quot;,...
-## $ EmployeeCount            &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
-## $ EmployeeNumber           &lt;int&gt; 1, 2, 4, 5, 7, 8, 10, 11, 12, 13, 14, 15, ...
-## $ EnvironmentSatisfaction  &lt;int&gt; 2, 3, 4, 4, 1, 4, 3, 4, 4, 3, 1, 4, 1, 2, ...
-## $ Gender                   &lt;chr&gt; &quot;Female&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;...
-## $ HourlyRate               &lt;int&gt; 94, 61, 92, 56, 40, 79, 81, 67, 44, 94, 84...
-## $ JobInvolvement           &lt;int&gt; 3, 2, 2, 3, 3, 3, 4, 3, 2, 3, 4, 2, 3, 3, ...
-## $ JobLevel                 &lt;int&gt; 2, 2, 1, 1, 1, 1, 1, 1, 3, 2, 1, 2, 1, 1, ...
-## $ JobRole                  &lt;chr&gt; &quot;Sales Executive&quot;, &quot;Research Scientist&quot;, &quot;...
-## $ JobSatisfaction          &lt;int&gt; 4, 2, 3, 3, 2, 4, 1, 3, 3, 3, 2, 3, 3, 4, ...
-## $ MaritalStatus            &lt;chr&gt; &quot;Single&quot;, &quot;Married&quot;, &quot;Single&quot;, &quot;Married&quot;, ...
-## $ MonthlyIncome            &lt;int&gt; 5993, 5130, 2090, 2909, 3468, 3068, 2670, ...
-## $ MonthlyRate              &lt;int&gt; 19479, 24907, 2396, 23159, 16632, 11864, 9...
-## $ NumCompaniesWorked       &lt;int&gt; 8, 1, 6, 1, 9, 0, 4, 1, 0, 6, 0, 0, 1, 0, ...
-## $ Over18                   &lt;chr&gt; &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;Y...
-## $ OverTime                 &lt;chr&gt; &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Ye...
-## $ PercentSalaryHike        &lt;int&gt; 11, 23, 15, 11, 12, 13, 20, 22, 21, 13, 13...
-## $ PerformanceRating        &lt;int&gt; 3, 4, 3, 3, 3, 3, 4, 4, 4, 3, 3, 3, 3, 3, ...
-## $ RelationshipSatisfaction &lt;int&gt; 1, 4, 2, 3, 4, 3, 1, 2, 2, 2, 3, 4, 4, 3, ...
-## $ StandardHours            &lt;int&gt; 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80...
-## $ StockOptionLevel         &lt;int&gt; 0, 1, 0, 0, 1, 0, 3, 1, 0, 2, 1, 0, 1, 1, ...
-## $ TotalWorkingYears        &lt;int&gt; 8, 10, 7, 8, 6, 8, 12, 1, 10, 17, 6, 10, 5...
-## $ TrainingTimesLastYear    &lt;int&gt; 0, 3, 3, 3, 3, 2, 3, 2, 2, 3, 5, 3, 1, 2, ...
-## $ WorkLifeBalance          &lt;int&gt; 1, 3, 3, 3, 3, 2, 2, 3, 3, 2, 3, 3, 2, 3, ...
-## $ YearsAtCompany           &lt;int&gt; 6, 10, 0, 8, 2, 7, 1, 1, 9, 7, 5, 9, 5, 2,...
-## $ YearsInCurrentRole       &lt;int&gt; 4, 7, 0, 7, 2, 7, 0, 0, 7, 7, 4, 5, 2, 2, ...
-## $ YearsSinceLastPromotion  &lt;int&gt; 0, 1, 0, 3, 2, 3, 0, 0, 1, 7, 0, 0, 4, 1, ...
-## $ YearsWithCurrManager     &lt;int&gt; 5, 7, 0, 0, 2, 6, 0, 0, 8, 7, 3, 8, 3, 2, ...</code></pre>
+  rename(Age = 癤풞ge) </code></pre>
 </div>
 <div id="basic-data-check" class="section level1">
 <h1>Basic Data Check:</h1>
 <p>The following basic checks and others have been done including: - Number of Rows - Number of Distinct Employee information - Computations using dplyr functions - Cohort Analysis of Employment by the Years - Attrition by the Years in respect to Yearly Employment</p>
-<pre class="r"><code>hr_data %&gt;%
-  summarise(n()) %&gt;%
-  glimpse #1470 Rows in data</code></pre>
-<pre><code>## Rows: 1
-## Columns: 1
-## $ `n()` &lt;int&gt; 1470</code></pre>
-<pre class="r"><code>hr_data %&gt;%
-  summarise(n_distinct(EmployeeNumber)) %&gt;%
-  glimpse #1470, so EmployeeNumber can be used a Primary Key</code></pre>
-<pre><code>## Rows: 1
-## Columns: 1
-## $ `n_distinct(EmployeeNumber)` &lt;int&gt; 1470</code></pre>
-<pre class="r"><code>hr_data %&gt;%
-  group_by(Attrition) %&gt;%
-  summarise(n()) %&gt;%
-  glimpse #so 237 Yes and 1233 No, totals to 1470 rows</code></pre>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<pre><code>## Rows: 2
-## Columns: 2
-## $ Attrition &lt;chr&gt; &quot;No&quot;, &quot;Yes&quot;
-## $ `n()`     &lt;int&gt; 1233, 237</code></pre>
-<pre class="r"><code>hr_data %&gt;% 
-  group_by(Attrition) %&gt;%
-  summarise(avg_age = mean(Age, na.rm = TRUE)) %&gt;%
-  glimpse #Avg Age of No: 37.56, Yes: 33.61 --&gt; Not much Diff</code></pre>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<pre><code>## Rows: 2
-## Columns: 2
-## $ Attrition &lt;chr&gt; &quot;No&quot;, &quot;Yes&quot;
-## $ avg_age   &lt;dbl&gt; 37.56123, 33.60759</code></pre>
-<pre class="r"><code>hr_data %&gt;%
-  group_by(Attrition) %&gt;%
-  summarise(job_satisfaction = mean(EnvironmentSatisfaction, na.rm = TRUE)) %&gt;%
-  glimpse #No: 2.77, Yes: 2.46</code></pre>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<pre><code>## Rows: 2
-## Columns: 2
-## $ Attrition        &lt;chr&gt; &quot;No&quot;, &quot;Yes&quot;
-## $ job_satisfaction &lt;dbl&gt; 2.771290, 2.464135</code></pre>
-<pre class="r"><code>hr_data %&gt;%
-  group_by(Attrition) %&gt;%
-  summarise(avg_income = mean(MonthlyIncome, na.rm = TRUE)) %&gt;%
-  glimpse #No: $6833, Yes: $4787</code></pre>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<pre><code>## Rows: 2
-## Columns: 2
-## $ Attrition  &lt;chr&gt; &quot;No&quot;, &quot;Yes&quot;
-## $ avg_income &lt;dbl&gt; 6832.740, 4787.093</code></pre>
-<pre class="r"><code>hr_data %&gt;%
-  group_by(Attrition) %&gt;%
-  summarise(avg_job = mean(NumCompaniesWorked, na.rm = TRUE)) %&gt;%
-  glimpse #No: 2.65, Yes: 2.94</code></pre>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<pre><code>## Rows: 2
-## Columns: 2
-## $ Attrition &lt;chr&gt; &quot;No&quot;, &quot;Yes&quot;
-## $ avg_job   &lt;dbl&gt; 2.645580, 2.940928</code></pre>
-<pre class="r"><code>hr_data %&gt;%
-  group_by(Attrition) %&gt;%
-  summarise(job_satisfaction = mean(JobSatisfaction, na.rm = TRUE)) %&gt;%
-  glimpse #No: 2.78, Yes: 2.47</code></pre>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<pre><code>## Rows: 2
-## Columns: 2
-## $ Attrition        &lt;chr&gt; &quot;No&quot;, &quot;Yes&quot;
-## $ job_satisfaction &lt;dbl&gt; 2.778589, 2.468354</code></pre>
-<pre class="r"><code>#Percentage of Attrition per JobRole
+<pre class="r"><code>#Data Processsing for Cohort Analysis
+
+#Percentage of Attrition per JobRole
 hr_data %&gt;% 
   group_by(Attrition, JobRole) %&gt;%
   summarise(churn_employee_num = n()) %&gt;%
@@ -6179,8 +5973,8 @@ hr_data %&gt;%
   summarise(pct_attr = n()/churn_employee_num) %&gt;%
   arrange(desc(pct_attr)) %&gt;%
   glimpse #Yes: Top Laboratory Technician, Sales Executive, Research Scientist, Sales Representative, Human Resources</code></pre>
-<pre><code>## `summarise()` regrouping output by &#39;Attrition&#39; (override with `.groups` argument)
-## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;Attrition&#39; (override with `.groups` argument)</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <pre><code>## Rows: 9
 ## Columns: 2
 ## $ JobRole  &lt;chr&gt; &quot;Research Director&quot;, &quot;Manager&quot;, &quot;Healthcare Representative...
@@ -6323,37 +6117,12 @@ cohort_join_date &lt;- hr_data1 %&gt;%
 ## This warning is displayed once every 8 hours.
 ## Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
 <pre class="r"><code>hc</code></pre>
-<div id="htmlwidget-c42a565a9cd6126c28f7" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c42a565a9cd6126c28f7">{"x":{"hc_opts":{"title":{"text":"Annual New Employees"},"yAxis":{"title":{"text":" "}},"credits":{"enabled":false},"exporting":{"enabled":false,"enables":true,"buttons":{"contextButton":{"menuItems":["viewFullscreen","downloadPNG","separator","downloadCSV"]}}},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"}},"chart":{"type":"column"},"series":[{"group":"group","data":[{"join_date":2020,"join_year":44,"y":44,"name":2020},{"join_date":2019,"join_year":171,"y":171,"name":2019},{"join_date":2018,"join_year":127,"y":127,"name":2018},{"join_date":2017,"join_year":128,"y":128,"name":2017},{"join_date":2016,"join_year":110,"y":110,"name":2016},{"join_date":2015,"join_year":196,"y":196,"name":2015},{"join_date":2014,"join_year":76,"y":76,"name":2014}],"type":"column","name":"Total Employees","showInLegend":false,"lineWidth":0,"dataLabels":{"enabled":true,"formatter":"function() {\n                        if (this.y > 1000) {\n                        return Highcharts.numberFormat((this.y/1000), 1) + \"K\"\n                        } else {\n                        return this.y\n                        }\n                        }"},"enableMouseTracking":true},{"group":"group","data":[{"join_date":2020,"join_year":16,"y":16,"name":2020},{"join_date":2019,"join_year":59,"y":59,"name":2019},{"join_date":2018,"join_year":27,"y":27,"name":2018},{"join_date":2017,"join_year":20,"y":20,"name":2017},{"join_date":2016,"join_year":19,"y":19,"name":2016},{"join_date":2015,"join_year":21,"y":21,"name":2015},{"join_date":2014,"join_year":9,"y":9,"name":2014}],"type":"column","name":"Total Attrition","showInLegend":false,"lineWidth":0,"dataLabels":{"enabled":true},"enableMouseTracking":true}],"xAxis":{"categories":[2020,2019,2018,2017,2016,2015,2014]}},"theme":{"colors":["#6794a7","#014d64","#76c0c1","#01a2d9","#7ad2f6","#00887d","#adadad","#7bd3f6","#7c260b","#ee8f71","#76c0c1","#a18376"],"chart":{"backgroundColor":"#d5e4eb","style":{"fontFamily":"Droid Sans","color":"#3C3C3C"}},"title":{"align":"left","style":{"fontWeight":"bold"}},"subtitle":{"align":"left"},"yAxis":{"gridLineColor":"#FFFFFF","lineColor":"#FFFFFF","minorGridLineColor":"#FFFFFF","tickColor":"#D7D7D8","tickWidth":1,"title":{"style":{"color":"#A0A0A3"}}},"tooltip":{"backgroundColor":"#FFFFFF","borderColor":"#76c0c1","style":{"color":"#000000"}},"legend":{"itemStyle":{"color":"#3C3C3C"},"itemHiddenStyle":{"color":"#606063"}},"credits":{"style":{"color":"#666"}},"labels":{"style":{"color":"#D7D7D8"}},"drilldown":{"activeAxisLabelStyle":{"color":"#F0F0F3"},"activeDataLabelStyle":{"color":"#F0F0F3"}},"navigation":{"buttonOptions":{"symbolStroke":"#DDDDDD","theme":{"fill":"#505053"}}},"legendBackgroundColor":"rgba(0, 0, 0, 0.5)","background2":"#505053","dataLabelsColor":"#B0B0B3","textColor":"#C0C0C0","contrastTextColor":"#F0F0F3","maskColor":"rgba(255,255,255,0.3)"},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":"Droid+Sans","debug":false},"evals":["hc_opts.series.0.dataLabels.formatter"],"jsHooks":[]}</script>
+<div id="htmlwidget-3ad2fe7a325ed87b4f6d" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3ad2fe7a325ed87b4f6d">{"x":{"hc_opts":{"title":{"text":"Annual New Employees"},"yAxis":{"title":{"text":" "}},"credits":{"enabled":false},"exporting":{"enabled":false,"enables":true,"buttons":{"contextButton":{"menuItems":["viewFullscreen","downloadPNG","separator","downloadCSV"]}}},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"}},"chart":{"type":"column"},"series":[{"group":"group","data":[{"join_date":2020,"join_year":44,"y":44,"name":2020},{"join_date":2019,"join_year":171,"y":171,"name":2019},{"join_date":2018,"join_year":127,"y":127,"name":2018},{"join_date":2017,"join_year":128,"y":128,"name":2017},{"join_date":2016,"join_year":110,"y":110,"name":2016},{"join_date":2015,"join_year":196,"y":196,"name":2015},{"join_date":2014,"join_year":76,"y":76,"name":2014}],"type":"column","name":"Total Employees","showInLegend":false,"lineWidth":0,"dataLabels":{"enabled":true,"formatter":"function() {\n                        if (this.y > 1000) {\n                        return Highcharts.numberFormat((this.y/1000), 1) + \"K\"\n                        } else {\n                        return this.y\n                        }\n                        }"},"enableMouseTracking":true},{"group":"group","data":[{"join_date":2020,"join_year":16,"y":16,"name":2020},{"join_date":2019,"join_year":59,"y":59,"name":2019},{"join_date":2018,"join_year":27,"y":27,"name":2018},{"join_date":2017,"join_year":20,"y":20,"name":2017},{"join_date":2016,"join_year":19,"y":19,"name":2016},{"join_date":2015,"join_year":21,"y":21,"name":2015},{"join_date":2014,"join_year":9,"y":9,"name":2014}],"type":"column","name":"Total Attrition","showInLegend":false,"lineWidth":0,"dataLabels":{"enabled":true},"enableMouseTracking":true}],"xAxis":{"categories":[2020,2019,2018,2017,2016,2015,2014]}},"theme":{"colors":["#6794a7","#014d64","#76c0c1","#01a2d9","#7ad2f6","#00887d","#adadad","#7bd3f6","#7c260b","#ee8f71","#76c0c1","#a18376"],"chart":{"backgroundColor":"#d5e4eb","style":{"fontFamily":"Droid Sans","color":"#3C3C3C"}},"title":{"align":"left","style":{"fontWeight":"bold"}},"subtitle":{"align":"left"},"yAxis":{"gridLineColor":"#FFFFFF","lineColor":"#FFFFFF","minorGridLineColor":"#FFFFFF","tickColor":"#D7D7D8","tickWidth":1,"title":{"style":{"color":"#A0A0A3"}}},"tooltip":{"backgroundColor":"#FFFFFF","borderColor":"#76c0c1","style":{"color":"#000000"}},"legend":{"itemStyle":{"color":"#3C3C3C"},"itemHiddenStyle":{"color":"#606063"}},"credits":{"style":{"color":"#666"}},"labels":{"style":{"color":"#D7D7D8"}},"drilldown":{"activeAxisLabelStyle":{"color":"#F0F0F3"},"activeDataLabelStyle":{"color":"#F0F0F3"}},"navigation":{"buttonOptions":{"symbolStroke":"#DDDDDD","theme":{"fill":"#505053"}}},"legendBackgroundColor":"rgba(0, 0, 0, 0.5)","background2":"#505053","dataLabelsColor":"#B0B0B3","textColor":"#C0C0C0","contrastTextColor":"#F0F0F3","maskColor":"rgba(255,255,255,0.3)"},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":"Droid+Sans","debug":false},"evals":["hc_opts.series.0.dataLabels.formatter"],"jsHooks":[]}</script>
 </div>
 <div id="first-exploratory-analysis-question-what-is-the-yearly-employment-total-and-total-churned-attrition" class="section level1">
 <h1>First Exploratory Analysis Question: What is the yearly employment total and total churned (attrition)?</h1>
 <p>Based on years, 2019 seens the most attrition with the most employment while in terms of ratio, 2015 had the smallest attrition ratio in respect to employment.</p>
-<pre class="r"><code>hr_data2 &lt;- hr_data1 %&gt;%
-  group_by(JobRole, Attrition) %&gt;%
-  summarise(count = n()) %&gt;%
-  filter(Attrition == &quot;Yes&quot;) %&gt;%
-#  top_n(5, count) %&gt;%
-  arrange(desc(count)) %&gt;%
-  glimpse</code></pre>
-<pre><code>## `summarise()` regrouping output by &#39;JobRole&#39; (override with `.groups` argument)</code></pre>
-<pre><code>## Rows: 9
-## Columns: 3
-## Groups: JobRole [9]
-## $ JobRole   &lt;chr&gt; &quot;Laboratory Technician&quot;, &quot;Sales Executive&quot;, &quot;Research Sci...
-## $ Attrition &lt;chr&gt; &quot;Yes&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;...
-## $ count     &lt;int&gt; 62, 57, 47, 33, 12, 10, 9, 5, 2</code></pre>
-<pre class="r"><code>hr_data3 &lt;- hr_data1 %&gt;%
-  group_by(JobRole) %&gt;%
-  summarise(total = n()) %&gt;%
-#  top_n(5, total) %&gt;%
-  arrange(desc(total)) %&gt;%
-  glimpse</code></pre>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<pre><code>## Rows: 9
-## Columns: 2
-## $ JobRole &lt;chr&gt; &quot;Sales Executive&quot;, &quot;Research Scientist&quot;, &quot;Laboratory Techni...
-## $ total   &lt;int&gt; 326, 292, 259, 145, 131, 102, 83, 80, 52</code></pre>
 <pre class="r"><code>hc2 &lt;- highchart() %&gt;%
   hc_chart(type = &quot;column&quot;) %&gt;%
   hc_title(text = &quot;Attrition by Job Roles&quot;) %&gt;%
@@ -6398,49 +6167,12 @@ cohort_join_date &lt;- hr_data1 %&gt;%
                                                    &#39;downloadCSV&#39;)))) %&gt;%
   hc_add_theme(hc_theme_economist())
 hc2</code></pre>
-<div id="htmlwidget-861bb9b12463872af80b" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-861bb9b12463872af80b">{"x":{"hc_opts":{"title":{"text":"Attrition by Job Roles"},"yAxis":{"title":{"text":" "}},"credits":{"enabled":false},"exporting":{"enabled":false,"enables":true,"buttons":{"contextButton":{"menuItems":["viewFullscreen","downloadPNG","separator","downloadCSV"]}}},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"}},"chart":{"type":"column"},"series":[{"group":"group","data":[{"JobRole":"Laboratory Technician","Attrition":"Yes","count":62,"y":62,"name":"Laboratory Technician"},{"JobRole":"Sales Executive","Attrition":"Yes","count":57,"y":57,"name":"Sales Executive"},{"JobRole":"Research Scientist","Attrition":"Yes","count":47,"y":47,"name":"Research Scientist"},{"JobRole":"Sales Representative","Attrition":"Yes","count":33,"y":33,"name":"Sales Representative"},{"JobRole":"Human Resources","Attrition":"Yes","count":12,"y":12,"name":"Human Resources"},{"JobRole":"Manufacturing Director","Attrition":"Yes","count":10,"y":10,"name":"Manufacturing Director"},{"JobRole":"Healthcare Representative","Attrition":"Yes","count":9,"y":9,"name":"Healthcare Representative"},{"JobRole":"Manager","Attrition":"Yes","count":5,"y":5,"name":"Manager"},{"JobRole":"Research Director","Attrition":"Yes","count":2,"y":2,"name":"Research Director"}],"type":"column","name":"Churns by Job Roles","showInLegend":false,"lineWidth":0,"dataLabels":{"enabled":true,"formatter":"function() {\n                        if (this.y > 1000) {\n                        return Highcharts.numberFormat((this.y/1000), 1) + \"K\"\n                        } else {\n                        return this.y\n                        }\n                        }"},"stacking":"normal","enableMouseTracking":true},{"group":"group","data":[{"JobRole":"Sales Executive","total":326,"y":326,"name":"Sales Executive"},{"JobRole":"Research Scientist","total":292,"y":292,"name":"Research Scientist"},{"JobRole":"Laboratory Technician","total":259,"y":259,"name":"Laboratory Technician"},{"JobRole":"Manufacturing Director","total":145,"y":145,"name":"Manufacturing Director"},{"JobRole":"Healthcare Representative","total":131,"y":131,"name":"Healthcare Representative"},{"JobRole":"Manager","total":102,"y":102,"name":"Manager"},{"JobRole":"Sales Representative","total":83,"y":83,"name":"Sales Representative"},{"JobRole":"Research Director","total":80,"y":80,"name":"Research Director"},{"JobRole":"Human Resources","total":52,"y":52,"name":"Human Resources"}],"type":"column","name":"Employees by Job Roles","showInLegend":false,"lineWidth":0,"dataLabels":{"enabled":true},"stacking":"normal","enableMouseTracking":true}],"xAxis":{"categories":["Laboratory Technician","Sales Executive","Research Scientist","Sales Representative","Human Resources","Manufacturing Director","Healthcare Representative","Manager","Research Director"]}},"theme":{"colors":["#6794a7","#014d64","#76c0c1","#01a2d9","#7ad2f6","#00887d","#adadad","#7bd3f6","#7c260b","#ee8f71","#76c0c1","#a18376"],"chart":{"backgroundColor":"#d5e4eb","style":{"fontFamily":"Droid Sans","color":"#3C3C3C"}},"title":{"align":"left","style":{"fontWeight":"bold"}},"subtitle":{"align":"left"},"yAxis":{"gridLineColor":"#FFFFFF","lineColor":"#FFFFFF","minorGridLineColor":"#FFFFFF","tickColor":"#D7D7D8","tickWidth":1,"title":{"style":{"color":"#A0A0A3"}}},"tooltip":{"backgroundColor":"#FFFFFF","borderColor":"#76c0c1","style":{"color":"#000000"}},"legend":{"itemStyle":{"color":"#3C3C3C"},"itemHiddenStyle":{"color":"#606063"}},"credits":{"style":{"color":"#666"}},"labels":{"style":{"color":"#D7D7D8"}},"drilldown":{"activeAxisLabelStyle":{"color":"#F0F0F3"},"activeDataLabelStyle":{"color":"#F0F0F3"}},"navigation":{"buttonOptions":{"symbolStroke":"#DDDDDD","theme":{"fill":"#505053"}}},"legendBackgroundColor":"rgba(0, 0, 0, 0.5)","background2":"#505053","dataLabelsColor":"#B0B0B3","textColor":"#C0C0C0","contrastTextColor":"#F0F0F3","maskColor":"rgba(255,255,255,0.3)"},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":"Droid+Sans","debug":false},"evals":["hc_opts.series.0.dataLabels.formatter"],"jsHooks":[]}</script>
+<div id="htmlwidget-4dd46d418349773871aa" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4dd46d418349773871aa">{"x":{"hc_opts":{"title":{"text":"Attrition by Job Roles"},"yAxis":{"title":{"text":" "}},"credits":{"enabled":false},"exporting":{"enabled":false,"enables":true,"buttons":{"contextButton":{"menuItems":["viewFullscreen","downloadPNG","separator","downloadCSV"]}}},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"}},"chart":{"type":"column"},"series":[{"group":"group","data":[{"JobRole":"Laboratory Technician","Attrition":"Yes","count":62,"y":62,"name":"Laboratory Technician"},{"JobRole":"Sales Executive","Attrition":"Yes","count":57,"y":57,"name":"Sales Executive"},{"JobRole":"Research Scientist","Attrition":"Yes","count":47,"y":47,"name":"Research Scientist"},{"JobRole":"Sales Representative","Attrition":"Yes","count":33,"y":33,"name":"Sales Representative"},{"JobRole":"Human Resources","Attrition":"Yes","count":12,"y":12,"name":"Human Resources"},{"JobRole":"Manufacturing Director","Attrition":"Yes","count":10,"y":10,"name":"Manufacturing Director"},{"JobRole":"Healthcare Representative","Attrition":"Yes","count":9,"y":9,"name":"Healthcare Representative"},{"JobRole":"Manager","Attrition":"Yes","count":5,"y":5,"name":"Manager"},{"JobRole":"Research Director","Attrition":"Yes","count":2,"y":2,"name":"Research Director"}],"type":"column","name":"Churns by Job Roles","showInLegend":false,"lineWidth":0,"dataLabels":{"enabled":true,"formatter":"function() {\n                        if (this.y > 1000) {\n                        return Highcharts.numberFormat((this.y/1000), 1) + \"K\"\n                        } else {\n                        return this.y\n                        }\n                        }"},"stacking":"normal","enableMouseTracking":true},{"group":"group","data":[{"JobRole":"Sales Executive","total":326,"y":326,"name":"Sales Executive"},{"JobRole":"Research Scientist","total":292,"y":292,"name":"Research Scientist"},{"JobRole":"Laboratory Technician","total":259,"y":259,"name":"Laboratory Technician"},{"JobRole":"Manufacturing Director","total":145,"y":145,"name":"Manufacturing Director"},{"JobRole":"Healthcare Representative","total":131,"y":131,"name":"Healthcare Representative"},{"JobRole":"Manager","total":102,"y":102,"name":"Manager"},{"JobRole":"Sales Representative","total":83,"y":83,"name":"Sales Representative"},{"JobRole":"Research Director","total":80,"y":80,"name":"Research Director"},{"JobRole":"Human Resources","total":52,"y":52,"name":"Human Resources"}],"type":"column","name":"Employees by Job Roles","showInLegend":false,"lineWidth":0,"dataLabels":{"enabled":true},"stacking":"normal","enableMouseTracking":true}],"xAxis":{"categories":["Laboratory Technician","Sales Executive","Research Scientist","Sales Representative","Human Resources","Manufacturing Director","Healthcare Representative","Manager","Research Director"]}},"theme":{"colors":["#6794a7","#014d64","#76c0c1","#01a2d9","#7ad2f6","#00887d","#adadad","#7bd3f6","#7c260b","#ee8f71","#76c0c1","#a18376"],"chart":{"backgroundColor":"#d5e4eb","style":{"fontFamily":"Droid Sans","color":"#3C3C3C"}},"title":{"align":"left","style":{"fontWeight":"bold"}},"subtitle":{"align":"left"},"yAxis":{"gridLineColor":"#FFFFFF","lineColor":"#FFFFFF","minorGridLineColor":"#FFFFFF","tickColor":"#D7D7D8","tickWidth":1,"title":{"style":{"color":"#A0A0A3"}}},"tooltip":{"backgroundColor":"#FFFFFF","borderColor":"#76c0c1","style":{"color":"#000000"}},"legend":{"itemStyle":{"color":"#3C3C3C"},"itemHiddenStyle":{"color":"#606063"}},"credits":{"style":{"color":"#666"}},"labels":{"style":{"color":"#D7D7D8"}},"drilldown":{"activeAxisLabelStyle":{"color":"#F0F0F3"},"activeDataLabelStyle":{"color":"#F0F0F3"}},"navigation":{"buttonOptions":{"symbolStroke":"#DDDDDD","theme":{"fill":"#505053"}}},"legendBackgroundColor":"rgba(0, 0, 0, 0.5)","background2":"#505053","dataLabelsColor":"#B0B0B3","textColor":"#C0C0C0","contrastTextColor":"#F0F0F3","maskColor":"rgba(255,255,255,0.3)"},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":"Droid+Sans","debug":false},"evals":["hc_opts.series.0.dataLabels.formatter"],"jsHooks":[]}</script>
 </div>
 <div id="second-exploratory-analysis-question-which-job-roles-have-seen-the-highest-number-of-churns-attritions" class="section level1">
 <h1>Second Exploratory Analysis Question: Which Job Roles have seen the highest number of churns (attritions)?</h1>
 <p>Based on this, Laboratory Technicians have the highest attrition followed by Sales Executive and Research Scientist.</p>
-<pre class="r"><code>hr_data4 &lt;- hr_data1 %&gt;%
-  mutate(IncomeRange = case_when(
-  MonthlyIncome &gt;= 0 &amp; MonthlyIncome &lt; 2000 ~ &quot;Very Low&quot;,
-  MonthlyIncome &gt;= 2000 &amp; MonthlyIncome &lt; 4000 ~ &quot;Low&quot;,
-  MonthlyIncome &gt;= 4000 &amp; MonthlyIncome &lt; 6000 ~ &quot;Mid&quot;,
-  MonthlyIncome &gt;= 6000 &amp; MonthlyIncome &lt; 8000 ~ &quot;High&quot;,
-  MonthlyIncome &gt;= 8000 ~ &quot;Very High&quot;
-)) %&gt;%
-  group_by(Education) %&gt;%
-  select(Education, Attrition, MonthlyIncome, IncomeRange) %&gt;%
-  summarise(count = n(), avg_incomerange = mean(MonthlyIncome)) %&gt;%
-  glimpse</code></pre>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<pre><code>## Rows: 5
-## Columns: 3
-## $ Education       &lt;int&gt; 1, 2, 3, 4, 5
-## $ count           &lt;int&gt; 170, 282, 572, 398, 48
-## $ avg_incomerange &lt;dbl&gt; 5640.571, 6226.645, 6517.264, 6832.402, 8277.646</code></pre>
-<pre class="r"><code>hr_data5 &lt;- hr_data1 %&gt;%
-  filter(Attrition == &quot;Yes&quot;) %&gt;%
-  mutate(IncomeRange = case_when(
-  MonthlyIncome &gt;= 0 &amp; MonthlyIncome &lt; 2000 ~ &quot;Very Low&quot;,
-  MonthlyIncome &gt;= 2000 &amp; MonthlyIncome &lt; 4000 ~ &quot;Low&quot;,
-  MonthlyIncome &gt;= 4000 &amp; MonthlyIncome &lt; 6000 ~ &quot;Mid&quot;,
-  MonthlyIncome &gt;= 6000 &amp; MonthlyIncome &lt; 8000 ~ &quot;High&quot;,
-  MonthlyIncome &gt;= 8000 ~ &quot;Very High&quot;
-)) %&gt;%
-  group_by(Education) %&gt;%
-  select(Education, Attrition, MonthlyIncome, IncomeRange) %&gt;%
-  summarise(count = n(), avg_incomerange = mean(MonthlyIncome)) %&gt;%
-  glimpse</code></pre>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<pre><code>## Rows: 5
-## Columns: 3
-## $ Education       &lt;int&gt; 1, 2, 3, 4, 5
-## $ count           &lt;int&gt; 31, 44, 99, 58, 5
-## $ avg_incomerange &lt;dbl&gt; 4360.161, 4282.545, 4770.242, 5335.155, 5850.200</code></pre>
 <pre class="r"><code>hc3 &lt;- highchart() %&gt;%
   hc_chart(type = &quot;column&quot;) %&gt;%
   hc_title(text = &quot;Attrition by Education Level&quot;) %&gt;%
@@ -6503,8 +6235,8 @@ hc2</code></pre>
                                                    &#39;downloadCSV&#39;)))) %&gt;%
   hc_add_theme(hc_theme_economist())
 hc3</code></pre>
-<div id="htmlwidget-c64b829f13404fe019ff" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c64b829f13404fe019ff">{"x":{"hc_opts":{"title":{"text":"Attrition by Education Level"},"yAxis":{"title":{"text":" "}},"credits":{"enabled":false},"exporting":{"enabled":false,"enables":true,"buttons":{"contextButton":{"menuItems":["viewFullscreen","downloadPNG","separator","downloadCSV"]}}},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"}},"chart":{"type":"column"},"series":[{"group":"group","data":[{"Education":1,"count":31,"avg_incomerange":4360.16129032258,"y":31,"name":1},{"Education":2,"count":44,"avg_incomerange":4282.54545454545,"y":44,"name":2},{"Education":3,"count":99,"avg_incomerange":4770.24242424242,"y":99,"name":3},{"Education":4,"count":58,"avg_incomerange":5335.15517241379,"y":58,"name":4},{"Education":5,"count":5,"avg_incomerange":5850.2,"y":5,"name":5}],"type":"column","name":"Churns by Education Level","showInLegend":false,"lineWidth":0,"dataLabels":{"enabled":true,"formatter":"function() {\n                        if (this.y > 1000) {\n                        return Highcharts.numberFormat((this.y/1000), 1) + \"K\"\n                        } else {\n                        return this.y\n                        }\n                        }"},"stacking":"normal","enableMouseTracking":true},{"group":"group","data":[{"Education":1,"count":170,"avg_incomerange":5640.57058823529,"y":170,"name":1},{"Education":2,"count":282,"avg_incomerange":6226.64539007092,"y":282,"name":2},{"Education":3,"count":572,"avg_incomerange":6517.26398601399,"y":572,"name":3},{"Education":4,"count":398,"avg_incomerange":6832.40201005025,"y":398,"name":4},{"Education":5,"count":48,"avg_incomerange":8277.64583333333,"y":48,"name":5}],"type":"column","name":"Employees by Education","showInLegend":false,"lineWidth":0,"dataLabels":{"enabled":true},"stacking":"normal","enableMouseTracking":true},{"group":"group","data":[{"Education":1,"count":170,"avg_incomerange":5640.57058823529,"y":5640.57058823529,"name":1},{"Education":2,"count":282,"avg_incomerange":6226.64539007092,"y":6226.64539007092,"name":2},{"Education":3,"count":572,"avg_incomerange":6517.26398601399,"y":6517.26398601399,"name":3},{"Education":4,"count":398,"avg_incomerange":6832.40201005025,"y":6832.40201005025,"name":4},{"Education":5,"count":48,"avg_incomerange":8277.64583333333,"y":8277.64583333333,"name":5}],"type":"line","name":"Average Monthly Income by Education - Overall","showInLegend":true,"lineWidth":0,"dataLabels":{"enabled":true,"formatter":"function() {\n                        if (this.y > 1000) {\n                        return \"$\" + Highcharts.numberFormat((this.y/1000), 1) + \"K\"\n                        } else {\n                        return this.y\n                        }\n                        }"},"enableMouseTracking":true}],"xAxis":{"categories":[1,2,3,4,5]}},"theme":{"colors":["#6794a7","#014d64","#76c0c1","#01a2d9","#7ad2f6","#00887d","#adadad","#7bd3f6","#7c260b","#ee8f71","#76c0c1","#a18376"],"chart":{"backgroundColor":"#d5e4eb","style":{"fontFamily":"Droid Sans","color":"#3C3C3C"}},"title":{"align":"left","style":{"fontWeight":"bold"}},"subtitle":{"align":"left"},"yAxis":{"gridLineColor":"#FFFFFF","lineColor":"#FFFFFF","minorGridLineColor":"#FFFFFF","tickColor":"#D7D7D8","tickWidth":1,"title":{"style":{"color":"#A0A0A3"}}},"tooltip":{"backgroundColor":"#FFFFFF","borderColor":"#76c0c1","style":{"color":"#000000"}},"legend":{"itemStyle":{"color":"#3C3C3C"},"itemHiddenStyle":{"color":"#606063"}},"credits":{"style":{"color":"#666"}},"labels":{"style":{"color":"#D7D7D8"}},"drilldown":{"activeAxisLabelStyle":{"color":"#F0F0F3"},"activeDataLabelStyle":{"color":"#F0F0F3"}},"navigation":{"buttonOptions":{"symbolStroke":"#DDDDDD","theme":{"fill":"#505053"}}},"legendBackgroundColor":"rgba(0, 0, 0, 0.5)","background2":"#505053","dataLabelsColor":"#B0B0B3","textColor":"#C0C0C0","contrastTextColor":"#F0F0F3","maskColor":"rgba(255,255,255,0.3)"},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":"Droid+Sans","debug":false},"evals":["hc_opts.series.0.dataLabels.formatter","hc_opts.series.2.dataLabels.formatter"],"jsHooks":[]}</script>
+<div id="htmlwidget-19263133f0c843d0fed9" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-19263133f0c843d0fed9">{"x":{"hc_opts":{"title":{"text":"Attrition by Education Level"},"yAxis":{"title":{"text":" "}},"credits":{"enabled":false},"exporting":{"enabled":false,"enables":true,"buttons":{"contextButton":{"menuItems":["viewFullscreen","downloadPNG","separator","downloadCSV"]}}},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"}},"chart":{"type":"column"},"series":[{"group":"group","data":[{"Education":1,"count":31,"avg_incomerange":4360.16129032258,"y":31,"name":1},{"Education":2,"count":44,"avg_incomerange":4282.54545454545,"y":44,"name":2},{"Education":3,"count":99,"avg_incomerange":4770.24242424242,"y":99,"name":3},{"Education":4,"count":58,"avg_incomerange":5335.15517241379,"y":58,"name":4},{"Education":5,"count":5,"avg_incomerange":5850.2,"y":5,"name":5}],"type":"column","name":"Churns by Education Level","showInLegend":false,"lineWidth":0,"dataLabels":{"enabled":true,"formatter":"function() {\n                        if (this.y > 1000) {\n                        return Highcharts.numberFormat((this.y/1000), 1) + \"K\"\n                        } else {\n                        return this.y\n                        }\n                        }"},"stacking":"normal","enableMouseTracking":true},{"group":"group","data":[{"Education":1,"count":170,"avg_incomerange":5640.57058823529,"y":170,"name":1},{"Education":2,"count":282,"avg_incomerange":6226.64539007092,"y":282,"name":2},{"Education":3,"count":572,"avg_incomerange":6517.26398601399,"y":572,"name":3},{"Education":4,"count":398,"avg_incomerange":6832.40201005025,"y":398,"name":4},{"Education":5,"count":48,"avg_incomerange":8277.64583333333,"y":48,"name":5}],"type":"column","name":"Employees by Education","showInLegend":false,"lineWidth":0,"dataLabels":{"enabled":true},"stacking":"normal","enableMouseTracking":true},{"group":"group","data":[{"Education":1,"count":170,"avg_incomerange":5640.57058823529,"y":5640.57058823529,"name":1},{"Education":2,"count":282,"avg_incomerange":6226.64539007092,"y":6226.64539007092,"name":2},{"Education":3,"count":572,"avg_incomerange":6517.26398601399,"y":6517.26398601399,"name":3},{"Education":4,"count":398,"avg_incomerange":6832.40201005025,"y":6832.40201005025,"name":4},{"Education":5,"count":48,"avg_incomerange":8277.64583333333,"y":8277.64583333333,"name":5}],"type":"line","name":"Average Monthly Income by Education - Overall","showInLegend":true,"lineWidth":0,"dataLabels":{"enabled":true,"formatter":"function() {\n                        if (this.y > 1000) {\n                        return \"$\" + Highcharts.numberFormat((this.y/1000), 1) + \"K\"\n                        } else {\n                        return this.y\n                        }\n                        }"},"enableMouseTracking":true}],"xAxis":{"categories":[1,2,3,4,5]}},"theme":{"colors":["#6794a7","#014d64","#76c0c1","#01a2d9","#7ad2f6","#00887d","#adadad","#7bd3f6","#7c260b","#ee8f71","#76c0c1","#a18376"],"chart":{"backgroundColor":"#d5e4eb","style":{"fontFamily":"Droid Sans","color":"#3C3C3C"}},"title":{"align":"left","style":{"fontWeight":"bold"}},"subtitle":{"align":"left"},"yAxis":{"gridLineColor":"#FFFFFF","lineColor":"#FFFFFF","minorGridLineColor":"#FFFFFF","tickColor":"#D7D7D8","tickWidth":1,"title":{"style":{"color":"#A0A0A3"}}},"tooltip":{"backgroundColor":"#FFFFFF","borderColor":"#76c0c1","style":{"color":"#000000"}},"legend":{"itemStyle":{"color":"#3C3C3C"},"itemHiddenStyle":{"color":"#606063"}},"credits":{"style":{"color":"#666"}},"labels":{"style":{"color":"#D7D7D8"}},"drilldown":{"activeAxisLabelStyle":{"color":"#F0F0F3"},"activeDataLabelStyle":{"color":"#F0F0F3"}},"navigation":{"buttonOptions":{"symbolStroke":"#DDDDDD","theme":{"fill":"#505053"}}},"legendBackgroundColor":"rgba(0, 0, 0, 0.5)","background2":"#505053","dataLabelsColor":"#B0B0B3","textColor":"#C0C0C0","contrastTextColor":"#F0F0F3","maskColor":"rgba(255,255,255,0.3)"},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":"Droid+Sans","debug":false},"evals":["hc_opts.series.0.dataLabels.formatter","hc_opts.series.2.dataLabels.formatter"],"jsHooks":[]}</script>
 <p>#Third Exploratory Analysis: What relationship does monthly income have with attrition and education? Based on the results, the most attrition is at level 3 eduation - where there are the most employees - and they have a “mid” level income. This is probably because these people have an opportunity to build a better career for themselves and pursue these better opportunities. This is evident based on the slight differences between the working environment satisfaction where the average Job Satisfaction - No is 2.78 while average Job Satisfaction - Yes is slightly lower at 2.47.</p>
 <pre class="r"><code>rf_data &lt;- hr_data1
 rf_data &lt;- rf_data %&gt;%
