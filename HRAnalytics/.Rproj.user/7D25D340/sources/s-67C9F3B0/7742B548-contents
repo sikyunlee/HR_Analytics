@@ -3,6 +3,7 @@ title: "IBM HR Analytics Employee Attrtition & Performance"
 output:
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
 This notebook is an analytics project to analyze the dataset provdied in the (IBM HR Analytics Employee Attrition & Performance)[https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset]
@@ -397,7 +398,7 @@ rf_plot <- plot.roc(as.numeric(test_data$Attrition), as.numeric(rf_pred), lwd = 
 
 ```
 
-# AUC on ROc
+# AUC on ROC
 Although this is not a good fit or a model that explains the data well, this is a starting point in tuning the model by adding additional features and also better factoring the character data types. (this was a quick run so it didn't include all features)
 
 # Conclusion
